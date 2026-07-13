@@ -5,17 +5,16 @@ import { createClient } from "@/lib/supabase/client"
 import { useTimer } from "@/hooks/use-timer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
-import { Play, Pause, RotateCcw, Clock, Keyboard } from "lucide-react"
+import { Play, Pause, RotateCcw, Keyboard } from "lucide-react"
 
 export default function TimerPage() {
   const timer = useTimer()
   const [subjects, setSubjects] = useState<{ id: string; name: string; icon: string }[]>([])
   const [selectedSubject, setSelectedSubject] = useState<string>("")
   const [topics, setTopics] = useState<{ id: string; name: string }[]>([])
-  const [selectedTopic, setSelectedTopic] = useState<string>("")
+  const [selectedTopic] = useState<string>("")
 
   useEffect(() => {
     async function load() {

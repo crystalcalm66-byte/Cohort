@@ -4,12 +4,11 @@ import { useStreak } from "@/hooks/use-streak"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Flame, Snowflake, TrendingUp, Calendar } from "lucide-react"
+import { Flame, Snowflake, TrendingUp } from "lucide-react"
 
 export function StreakDisplay() {
-  const { streakData, loading, useFreeze } = useStreak()
+  const { streakData, loading } = useStreak()
 
   if (loading) {
     return (

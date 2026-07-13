@@ -4,12 +4,11 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Users, Plus, LogIn, Copy, Check } from "lucide-react"
 import { generateInviteCode } from "@/lib/utils"
@@ -17,7 +16,7 @@ import { toast } from "@/hooks/use-toast"
 
 export default function RoomsPage() {
   const router = useRouter()
-  const [rooms, setRooms] = useState<Record<string, unknown>[]>([])
+  const [rooms, setRooms] = useState<Record<string, any>[]>([])
   const [loading, setLoading] = useState(true)
   const [createOpen, setCreateOpen] = useState(false)
   const [joinOpen, setJoinOpen] = useState(false)

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -23,22 +23,7 @@ export function Chat({ roomId }: ChatProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const lastSentRef = useRef(0)
 
-  useEffect(() => {
-    const supabase = createClient()
-    supabase.auth.getUser().then(({ data }) => setUserId(data.user?.id || null))
-    loadMessages()
-
-    const interval = setInterval(loadMessages, 3000)
-    return () => clearInterval(interval)
-  }, [roomId])
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
-    }
-  }, [messages])
-
-  async function loadMessages() {
+  const loadMessages = useCallback(async () => {
     const supabase = createClient()
     const { data } = await supabase
       .from("room_messages")
@@ -47,9 +32,25 @@ export function Chat({ roomId }: ChatProps) {
       .order("created_at", { ascending: true })
       .limit(50)
 
-    if (data) setMessages(data as ChatMessage[])
+    if (data) setMessages(data as unknown as ChatMessage[])
     setLoading(false)
-  }
+  }, [roomId])
+
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data }) => setUserId(data.user?.id || null))
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadMessages()
+
+    const interval = setInterval(loadMessages, 3000)
+    return () => clearInterval(interval)
+  }, [roomId, loadMessages])
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+    }
+  }, [messages])
 
   async function handleSend() {
     if (!newMessage.trim() || sending || !userId) return

@@ -9,11 +9,11 @@ import { Gift, Copy, Check, Users } from "lucide-react"
 import { toast } from "@/hooks/use-toast"
 
 export function ReferralCard() {
-  const [code, setCode] = useState("")
+  const [, setCode] = useState("")
   const [referralLink, setReferralLink] = useState("")
   const [useCount, setUseCount] = useState(0)
   const [copied, setCopied] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [, setLoading] = useState(true)
 
   useEffect(() => {
     async function load() {

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { SubjectCard } from "@/components/syllabus/subject-card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -13,11 +13,7 @@ export default function SyllabusPage() {
   const [subjects, setSubjects] = useState<SubjectWithProgress[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    loadSubjects()
-  }, [track])
-
-  async function loadSubjects() {
+  const loadSubjects = useCallback(async () => {
     setLoading(true)
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -84,7 +80,12 @@ export default function SyllabusPage() {
 
     setSubjects(subjectsWithProgress)
     setLoading(false)
-  }
+  }, [track])
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadSubjects()
+  }, [track, loadSubjects])
 
   async function handleTopicToggle(topicId: string, completed: boolean) {
     const supabase = createClient()

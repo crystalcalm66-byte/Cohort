@@ -6,17 +6,16 @@ import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Chat } from "@/components/rooms/chat"
-import { ArrowLeft, Users, Copy, Check, Crown, Shield, UserMinus, Flag } from "lucide-react"
+import { ArrowLeft, Users, Copy, Check, Crown, Shield, UserMinus } from "lucide-react"
 import { toast } from "@/hooks/use-toast"
 
 export default function RoomPage() {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
-  const [room, setRoom] = useState<Record<string, unknown> | null>(null)
-  const [members, setMembers] = useState<Record<string, unknown>[]>([])
+  const [room, setRoom] = useState<Record<string, any> | null>(null)
+  const [members, setMembers] = useState<Record<string, any>[]>([])
   const [userId, setUserId] = useState<string | null>(null)
   const [userRole, setUserRole] = useState<string>("member")
   const [copied, setCopied] = useState(false)
@@ -44,7 +43,7 @@ export default function RoomPage() {
         .eq("room_id", id)
 
       if (memberData) {
-        setMembers(memberData as Record<string, unknown>[])
+        setMembers(memberData)
         const myMembership = memberData.find((m) => m.user_id === user.id)
         if (myMembership) setUserRole(myMembership.role)
       }
@@ -52,7 +51,7 @@ export default function RoomPage() {
       setLoading(false)
     }
     load()
-  }, [id])
+  }, [id, router])
 
   async function copyInvite() {
     if (!room) return
@@ -83,7 +82,6 @@ export default function RoomPage() {
 
   if (!room) return null
 
-  const isOwner = userRole === "owner"
   const isAdmin = userRole === "owner" || userRole === "admin"
 
   return (

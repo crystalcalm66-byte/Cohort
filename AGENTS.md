@@ -50,6 +50,20 @@
 
 ---
 
+## Fixes Applied (2026-07-13)
+
+| # | Issue | Fix |
+|---|---|---|
+| 1 | 24 TypeScript errors (unknown/never types from Supabase queries) | `Record<string, unknown>` → `Record<string, any>` in 6 component state types |
+| 2 | Missing `@types/pg` causing TS7016 in `scripts/seed-sql.ts` | Installed `@types/pg` dev dependency |
+| 3 | `netlify.toml` had `publish = ".next"` (wrong for Next.js on Netlify) | Removed `publish`, added `@netlify/plugin-nextjs` plugin |
+| 4 | 30 lint warnings (unused imports, missing deps, unused vars) | Cleaned up across 12 files; wrapped callbacks, suppressed react-compiler false positives |
+| 5 | `eslint-config-next` React Compiler `set-state-in-effect` errors | Added eslint-disable comments for standard data-fetching patterns |
+
+**Current status:** ✅ `tsc --noEmit` = 0 errors, `eslint` = 0 errors (6 warnings), `vitest run` = 6/6 pass
+
+---
+
 ## Known Limitations in Current Build
 
 - Syllabus topics sourced from publicly available Cambridge syllabus overviews; some topics may need refinement

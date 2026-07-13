@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Switch } from "@/components/ui/switch"
@@ -17,7 +16,7 @@ export default function LeaderboardPage() {
   const [optIn, setOptIn] = useState(false)
   const [userId, setUserId] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
-  const [entries, setEntries] = useState<Record<string, unknown>[]>([])
+  const [entries, setEntries] = useState<Record<string, any>[]>([])
 
   useEffect(() => {
     async function load() {

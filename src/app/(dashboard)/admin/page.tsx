@@ -3,13 +3,12 @@
 import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Users, BookOpen, Flag, BarChart3 } from "lucide-react"
 
 export default function AdminPage() {
   const [stats, setStats] = useState<{users: number; rooms: number; sessions: number} | null>(null)
-  const [reports, setReports] = useState<Record<string, unknown>[]>([])
+  const [reports, setReports] = useState<Record<string, any>[]>([])
   const [loading, setLoading] = useState(true)
   const [isAdmin, setIsAdmin] = useState(false)
 

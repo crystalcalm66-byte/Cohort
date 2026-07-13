@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown, ChevronRight, Circle, CheckCircle2, AlertCircle } from "lucide-react"
+import { ChevronDown, ChevronRight, Circle, CheckCircle2 } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
 import type { SubjectWithProgress, UnitWithProgress } from "@/types"
 
