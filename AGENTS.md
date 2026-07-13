@@ -1,8 +1,8 @@
 # Cohort — Agent Build Log
 
-## Current Status: All Phases Complete — Final Verification Pending
-## Last Action: All source files written, migrations created, seed script ready
-## Next Action: Run type-check, lint, tests, push to GitHub
+## Current Status: ✅ Build + Migrations + Seed Complete
+## Last Action: Seed script completed — all 28 subjects in DB
+## Next Action: Deploy to Netlify (via web UI — 3 clicks)
 
 ---
 
@@ -22,6 +22,10 @@
 | 2026-07-13 | 9 | Streaks hook, leaderboard (global opt-in, 6h cap), referrals, confetti | ✅ |
 | 2026-07-13 | 10 | Email API route (Resend), admin panel, legal pages (ToS + Privacy) | ✅ |
 | 2026-07-13 | 11 | Timer unit tests (Vitest), manifest.json, PWA prep | ✅ |
+| 2026-07-13 | 12 | Verification: tsc --noEmit (0 errors), lint (0 errors, 30 warnings), vitest (6/6 pass) | ✅ |
+| 2026-07-13 | 13 | Pushed to GitHub (86 files, 14511 insertions) | ✅ |
+| 2026-07-13 | 14 | Ran 6 SQL migrations on Supabase DB | ✅ |
+| 2026-07-13 | 15 | Seeded syllabus: 13 O Level, 13 A Level, 2 SAT subjects | ✅ |
 
 ---
 
