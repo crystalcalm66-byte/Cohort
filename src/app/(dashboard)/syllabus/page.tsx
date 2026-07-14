@@ -16,15 +16,16 @@ export default function SyllabusPage() {
   const loadSubjects = useCallback(async () => {
     setLoading(true)
     const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    if (userError || !user) { setLoading(false); console.error("Auth error:", userError); return }
 
-    const { data: subjectRows } = await supabase
+    const { data: subjectRows, error: subjectError } = await supabase
       .from("subjects")
       .select("*")
       .eq("exam_track", track)
       .order("order_index")
 
+    if (subjectError) { setLoading(false); console.error("Subjects error:", subjectError); return }
     if (!subjectRows) { setLoading(false); return }
 
     const subjectsWithProgress: SubjectWithProgress[] = await Promise.all(
