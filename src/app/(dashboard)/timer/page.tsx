@@ -27,14 +27,23 @@ export default function TimerPage() {
         .select("subject_id")
         .eq("user_id", user.id)
 
-      const selectedIds = (selections || []).map((s) => s.subject_id)
-      if (selectedIds.length === 0) { setSubjects([]); return }
-
-      const { data: subjRows } = await supabase
-        .from("subjects")
-        .select("id, name, icon")
-        .in("id", selectedIds)
-        .order("order_index")
+      let subjRows
+      if (selections && selections.length > 0) {
+        const ids = selections.map((s) => s.subject_id)
+        const { data } = await supabase
+          .from("subjects")
+          .select("id, name, icon")
+          .in("id", ids)
+          .order("order_index")
+        subjRows = data
+      }
+      if (!subjRows) {
+        const { data } = await supabase
+          .from("subjects")
+          .select("id, name, icon")
+          .order("order_index")
+        subjRows = data
+      }
 
       if (subjRows) setSubjects(subjRows)
     }
