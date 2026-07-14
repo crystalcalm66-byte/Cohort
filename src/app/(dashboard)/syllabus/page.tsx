@@ -16,8 +16,8 @@ export default function SyllabusPage() {
   const loadSubjects = useCallback(async () => {
     setLoading(true)
     const supabase = createClient()
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
-    if (userError || !user) { setLoading(false); console.error("Auth error:", userError); return }
+    const { data: { user } } = await supabase.auth.getUser()
+    const userId = user?.id
 
     const { data: subjectRows, error: subjectError } = await supabase
       .from("subjects")
@@ -43,13 +43,16 @@ export default function SyllabusPage() {
             .eq("unit_id", unit.id)
             .order("order_index")
 
-          const { data: progressRows } = await supabase
-            .from("topic_progress")
-            .select("topic_id, completed, confidence")
-            .eq("user_id", user.id)
-            .in("topic_id", (topicRows || []).map((t) => t.id))
+          let progressMap = new Map<string, { completed: boolean; confidence: number | null }>()
+          if (userId) {
+            const { data: progressRows } = await supabase
+              .from("topic_progress")
+              .select("topic_id, completed, confidence")
+              .eq("user_id", userId)
+              .in("topic_id", (topicRows || []).map((t) => t.id))
+            progressMap = new Map((progressRows || []).map((p) => [p.topic_id, p]))
+          }
 
-          const progressMap = new Map((progressRows || []).map((p) => [p.topic_id, p]))
           const topics = (topicRows || []).map((topic) => ({
             id: topic.id,
             name: topic.name,
