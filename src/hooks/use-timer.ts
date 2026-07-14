@@ -112,7 +112,7 @@ export function useTimer() {
   const start = useCallback(() => {
     workerRef.current?.postMessage({
       type: "start",
-      payload: { target: stateRef.current.target },
+      payload: { target: stateRef.current.target, elapsed: stateRef.current.elapsed },
     })
   }, [])
 
