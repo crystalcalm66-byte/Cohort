@@ -22,9 +22,18 @@ export default function TimerPage() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
 
+      const { data: selections } = await supabase
+        .from("user_subjects")
+        .select("subject_id")
+        .eq("user_id", user.id)
+
+      const selectedIds = (selections || []).map((s) => s.subject_id)
+      if (selectedIds.length === 0) { setSubjects([]); return }
+
       const { data: subjRows } = await supabase
         .from("subjects")
         .select("id, name, icon")
+        .in("id", selectedIds)
         .order("order_index")
 
       if (subjRows) setSubjects(subjRows)
